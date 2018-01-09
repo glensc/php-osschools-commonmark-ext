@@ -3,7 +3,7 @@
 namespace OSSchools\Extensions\CommonMark;
 
 use League\CommonMark\Extension\Extension;
-use OSSchools\Extensions\CommonMark\Element\StrikeThrough;
+use OSSchools\Extensions\CommonMark\InlineParsers\AutoLinkParser;
 use OSSchools\Extensions\CommonMark\InlineParsers\StrikeThroughParser;
 use OSSchools\Extensions\CommonMark\InlineRenderers\ExternalLinkRenderer;
 use OSSchools\Extensions\CommonMark\InlineRenderers\StrikeThroughRenderer;
@@ -30,14 +30,15 @@ class OSSchoolsCommonMarkExtension extends Extension
     public function getInlineParsers()
     {
         return [
-            new StrikeThroughParser()
+            new StrikeThroughParser(),
+            new AutoLinkParser()
         ];
     }
 
     public function getInlineRenderers()
     {
         return [
-            get_class(new StrikeThrough()) => new StrikeThroughRenderer(),
+            'OSSchools\\Extensions\\CommonMark\\Element\\StrikeThrough' => new StrikeThroughRenderer(),
             'League\\CommonMark\\Inline\\Element\\Link' => new ExternalLinkRenderer('localhost.net'),
         ];
     }

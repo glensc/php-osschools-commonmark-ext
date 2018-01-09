@@ -33,10 +33,11 @@ class StrikeThroughParser extends AbstractInlineParser
                 $text = mb_substr($cursor->getLine(), $currentPosition, $cursor->getPosition() - $currentPosition - strlen($tildes), 'utf-8');
                 $text = preg_replace('/[ \n]+/', ' ', $text);
                 $inlineContext->getContainer()->appendChild(new StrikeThrough(trim($text)));
+                return true;
             }
         }
         $cursor->restoreState($previous_state);
         $inlineContext->getContainer()->appendChild(new Text($tildes));
-        return true;
+        return false;
     }
 }

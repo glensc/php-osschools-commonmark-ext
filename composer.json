@@ -3,7 +3,8 @@
   "type": "library",
   "license": "GPL-3.0-or-later",
   "require": {
-    "league/commonmark": "^0.17.0"
+    "league/commonmark": "^0.17.0",
+    "laravel/framework": "^5.5"
   },
   "autoload": {
     "psr-4": {
