@@ -6,6 +6,7 @@ use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\UrlEncoder;
+use OSSchools\Extensions\CommonMark\Special\URLMeta;
 
 class AutoLinkParser extends AbstractInlineParser
 {
@@ -30,7 +31,8 @@ class AutoLinkParser extends AbstractInlineParser
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(self::LINK_REGEX)) {
-            $inlineContext->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($m), $m));
+            $urlMeta = new URLMeta($m);
+            $inlineContext->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($m), $urlMeta->parse()->title != null ? $urlMeta->parse()->title : $m));
             return true;
         }
         return false;
