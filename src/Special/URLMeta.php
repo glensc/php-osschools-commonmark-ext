@@ -23,6 +23,15 @@ class URLMeta
         $this->xpath = new DOMXPath($doc);
     }
 
+    /**
+     * @param int $timeout
+     * @param int $connect_timeout
+     * @param int $num_tries
+     * @param int $wait_between_tries_seconds
+     * @param array $other_curl_options
+     * @param array $custom_fail_strings
+     * @return bool|mixed
+     */
     function crawl(
         $timeout = 10,
         $connect_timeout = 3,

@@ -11,15 +11,16 @@ use OSSchools\Extensions\CommonMark\Special\URLMeta;
 class AutoLinkParser extends AbstractInlineParser
 {
     // This link regex will only parse links starting in http or https
-    const LINK_REGEX = '#^(https?)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?#i';
+    const EMAIL_REGEX = '/^([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)/i';
+    const OTHER_LINK_REGEX = '/^[A-Za-z][A-Za-z0-9.+-]{1,31}:[^<>\x00-\x20]*/i';
 
     /**
      * @return string[]
      */
     public function getCharacters()
     {
-        // The character must be filled in, so an "h" here works because we require http or https to prepend the link
-        return ['h'];
+        // Get any alphanumeric character
+        return array_merge(array_merge(range('a', 'z'), range('A', 'Z')), range(0, 9));
     }
 
     /**
@@ -30,9 +31,12 @@ class AutoLinkParser extends AbstractInlineParser
     public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
-        if ($m = $cursor->match(self::LINK_REGEX)) {
+        if ($m = $cursor->match(self::OTHER_LINK_REGEX)) {
             $urlMeta = new URLMeta($m);
             $inlineContext->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($m), $urlMeta->parse()->title != null ? $urlMeta->parse()->title : $m));
+            return true;
+        } elseif ($m = $cursor->match(self::EMAIL_REGEX)) {
+            $inlineContext->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($m), $m));
             return true;
         }
         return false;
