@@ -1,6 +1,6 @@
 <?php
 
-namespace OSSchools\Extensions\CommonMark\InlineParsers;
+namespace OSSchools\Extensions\CommonMark\Inline\Parsers;
 
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;

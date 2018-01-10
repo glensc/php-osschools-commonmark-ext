@@ -33,9 +33,9 @@ class URLMeta
      * @return bool|mixed
      */
     function crawl(
-        $timeout = 10,
-        $connect_timeout = 3,
-        $num_tries = 3,
+        $timeout = 3,
+        $connect_timeout = 1,
+        $num_tries = 2,
         $wait_between_tries_seconds = 1,
         $other_curl_options = array(),
         $custom_fail_strings = array()
@@ -93,24 +93,26 @@ class URLMeta
         );
         $this->standard = $this->og = array();
         $query = '//*/meta';
-        $metas = $this->xpath->query($query);
-        if ($metas) {
-            foreach ($metas as $meta) {
-                $name = $meta->getAttribute('name');
-                $property = $meta->getAttribute('property');
-                $content = $meta->getAttribute('content');
-                if (!empty($name)) {
-                    $this->standard[$name] = $content;
-                } else if (!empty($property)) {
-                    // can be more than one article:tag
-                    if ($property == 'article:tag') {
-                        if (isset($this->og['article:tag'])) {
-                            $this->og['article:tag'][] = $content;
-                        } else {
-                            $this->og['article:tag'] = array($content);
+        if ($this->xpath != null) {
+            $metas = $this->xpath->query($query);
+            if ($metas) {
+                foreach ($metas as $meta) {
+                    $name = $meta->getAttribute('name');
+                    $property = $meta->getAttribute('property');
+                    $content = $meta->getAttribute('content');
+                    if (!empty($name)) {
+                        $this->standard[$name] = $content;
+                    } else if (!empty($property)) {
+                        // can be more than one article:tag
+                        if ($property == 'article:tag') {
+                            if (isset($this->og['article:tag'])) {
+                                $this->og['article:tag'][] = $content;
+                            } else {
+                                $this->og['article:tag'] = array($content);
+                            }
                         }
+                        $this->og[$property] = $content;
                     }
-                    $this->og[$property] = $content;
                 }
             }
             $this->get_title();
@@ -131,15 +133,17 @@ class URLMeta
             $this->response->title = $this->og['og:title'];
         } else {
             $query = '//*/title';
-            $titles = $this->xpath->query($query);
-            if ($titles) {
-                if (empty($titles)) {
-                    foreach ($titles as $title) {
-                        $this->response->title = $title->nodeValue;
-                        break;
+            if ($this->xpath != null) {
+                $titles = $this->xpath->query($query);
+                if ($titles) {
+                    if (empty($titles)) {
+                        foreach ($titles as $title) {
+                            $this->response->title = $title->nodeValue;
+                            break;
+                        }
+                    } else {
+                        $this->response->title = null;
                     }
-                } else {
-                    $this->response->title = null;
                 }
             }
         }
