@@ -1,6 +1,6 @@
 <?php
 
-namespace OSSchools\Extensions\CommonMark\InlineRenderers;
+namespace OSSchools\Extensions\CommonMark\Inline\Renderers;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
