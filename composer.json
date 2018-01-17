@@ -4,7 +4,8 @@
   "license": "GPL-3.0-or-later",
   "require": {
     "league/commonmark": "^0.17.0",
-    "laravel/framework": "^5.5"
+    "laravel/framework": "^5.5",
+    "mpratt/embera": "^1.9"
   },
   "autoload": {
     "psr-4": {

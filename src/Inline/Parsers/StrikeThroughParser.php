@@ -5,7 +5,7 @@ namespace OSSchools\Extensions\CommonMark\Inline\Parsers;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;
 use League\CommonMark\InlineParserContext;
-use OSSchools\Extensions\CommonMark\Element\StrikeThrough;
+use OSSchools\Extensions\CommonMark\Inline\Element\StrikeThrough;
 
 class StrikeThroughParser extends AbstractInlineParser
 {

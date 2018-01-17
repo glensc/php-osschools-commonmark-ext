@@ -5,6 +5,7 @@ namespace OSSchools\Extensions\CommonMark;
 use League\CommonMark\Extension\Extension;
 use OSSchools\Extensions\CommonMark\Inline\Parsers\AutoLinkParser;
 use OSSchools\Extensions\CommonMark\Inline\Parsers\StrikeThroughParser;
+use OSSchools\Extensions\CommonMark\Inline\Renderers\AutoEmbedRenderer;
 use OSSchools\Extensions\CommonMark\Inline\Renderers\StrikeThroughRenderer;
 
 class OSSchoolsCommonMarkExtension extends Extension
@@ -38,6 +39,7 @@ class OSSchoolsCommonMarkExtension extends Extension
     {
         return [
             'OSSchools\\Extensions\\CommonMark\\Inline\\Element\\StrikeThrough' => new StrikeThroughRenderer(),
+            'Legue\\CommonMark\\Inline\\Element\\Link' => new AutoEmbedRenderer()
             // Need to find away to get the domain of the application easily
             //'League\\CommonMark\\Inline\\Element\\Link' => new ExternalLinkRenderer()
         ];
