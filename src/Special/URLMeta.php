@@ -15,7 +15,7 @@ class URLMeta
         $this->url = $url;
 
         if (!$html = $this->crawl()) {
-            return false;
+            return;
         }
         libxml_use_internal_errors(true);
         $doc = new DomDocument();
