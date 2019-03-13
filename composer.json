@@ -3,7 +3,8 @@
   "type": "library",
   "license": "GPL-3.0-or-later",
   "require": {
-    "league/commonmark": "^0.17.0",
+    "php": "^5.4||^7.0",
+    "league/commonmark": "^0.17.0||^0.18.1",
     "laravel/framework": "^5.5",
     "mpratt/embera": "^1.9"
   },
