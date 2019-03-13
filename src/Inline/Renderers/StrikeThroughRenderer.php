@@ -6,7 +6,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
-use OSSchools\Extensions\CommonMark\Element\StrikeThrough;
+use OSSchools\Extensions\CommonMark\Inline\Element\StrikeThrough;
 
 class StrikeThroughRenderer implements InlineRendererInterface
 {
